@@ -10,11 +10,28 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm install
    ```
 
-2. Start the app
+2. Set up environment variables
+
+   Create a `.env` file in the root directory and set your API domain:
+   
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Then edit `.env` and set your `EXPO_PUBLIC_API_DOMAIN`:
+   ```
+   EXPO_PUBLIC_API_DOMAIN=https://your-api-domain.com
+   ```
+   
+   **Important:** For Expo apps, environment variables must be prefixed with `EXPO_PUBLIC_` to be accessible in the client-side code.
+
+3. Start the app
 
    ```bash
    npx expo start
    ```
+   
+   **Note:** If you see "Network request failed" errors, make sure your `EXPO_PUBLIC_API_DOMAIN` is correctly set in your `.env` file.
 
 In the output, you'll find options to open the app in a
 
