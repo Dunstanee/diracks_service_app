@@ -879,7 +879,7 @@ const ServiceDetails = () => {
             </View>
           </View>
           {/* Delete Button */}
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.deleteButton}
             onPress={handleDelete}
             activeOpacity={0.7}
@@ -887,7 +887,7 @@ const ServiceDetails = () => {
           >
             <Ionicons name="trash-outline" size={24} color={colors.text.inverse} />
             <Text style={styles.deleteButtonText}>Delete Service</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </ScrollView>
 
