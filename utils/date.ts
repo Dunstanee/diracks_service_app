@@ -1,14 +1,20 @@
 /**
- * Date utility functions for formatting Unix timestamps
- * Handles timestamps in seconds (Unix) and converts them to various date/time formats
+ * Date utility functions for formatting timestamps
+ * Handles both Unix timestamps (in seconds) and ISO 8601 date strings (e.g., "2026-01-04T13:35:44.911638Z")
+ * and converts them to various date/time formats
  */
 
 /**
- * Converts Unix timestamp (in seconds) to JavaScript Date object
- * @param timestamp - Unix timestamp in seconds
+ * Converts a timestamp (Unix timestamp in seconds or ISO 8601 string) to JavaScript Date object
+ * @param timestamp - Unix timestamp in seconds (number) or ISO 8601 date string (e.g., "2026-01-04T13:35:44.911638Z")
  * @returns Date object
  */
-function timestampToDate(timestamp: number): Date {
+function timestampToDate(timestamp: number | string): Date {
+  // If it's a string, treat it as ISO 8601 format
+  if (typeof timestamp === 'string') {
+    return new Date(timestamp);
+  }
+  
   // If timestamp is less than 1e12, it's in seconds, multiply by 1000
   // Otherwise, assume it's already in milliseconds
   const milliseconds = timestamp < 1e12 ? timestamp * 1000 : timestamp;
@@ -16,12 +22,12 @@ function timestampToDate(timestamp: number): Date {
 }
 
 /**
- * Formats a Unix timestamp to date only (e.g., "January 15, 2024")
- * @param timestamp - Unix timestamp in seconds
+ * Formats a timestamp to date only (e.g., "January 15, 2024")
+ * @param timestamp - Unix timestamp in seconds (number) or ISO 8601 date string (e.g., "2026-01-04T13:35:44.911638Z")
  * @param locale - Locale string (default: 'en-US')
  * @returns Formatted date string
  */
-export function formatDate(timestamp: number, locale: string = 'en-US'): string {
+export function formatDate(timestamp: number | string, locale: string = 'en-US'): string {
   const date = timestampToDate(timestamp);
   return date.toLocaleDateString(locale, {
     year: 'numeric',
@@ -31,14 +37,14 @@ export function formatDate(timestamp: number, locale: string = 'en-US'): string 
 }
 
 /**
- * Formats a Unix timestamp to date and time (e.g., "January 15, 2024, 10:30 AM")
- * @param timestamp - Unix timestamp in seconds
+ * Formats a timestamp to date and time (e.g., "January 15, 2024, 10:30 AM")
+ * @param timestamp - Unix timestamp in seconds (number) or ISO 8601 date string (e.g., "2026-01-04T13:35:44.911638Z")
  * @param locale - Locale string (default: 'en-US')
  * @param includeSeconds - Whether to include seconds in the time (default: false)
  * @returns Formatted date and time string
  */
 export function formatDateTime(
-  timestamp: number,
+  timestamp: number | string,
   locale: string = 'en-US',
   includeSeconds: boolean = false
 ): string {
@@ -55,14 +61,14 @@ export function formatDateTime(
 }
 
 /**
- * Formats a Unix timestamp to time only (e.g., "10:30 AM")
- * @param timestamp - Unix timestamp in seconds
+ * Formats a timestamp to time only (e.g., "10:30 AM")
+ * @param timestamp - Unix timestamp in seconds (number) or ISO 8601 date string (e.g., "2026-01-04T13:35:44.911638Z")
  * @param locale - Locale string (default: 'en-US')
  * @param includeSeconds - Whether to include seconds in the time (default: false)
  * @returns Formatted time string
  */
 export function formatTime(
-  timestamp: number,
+  timestamp: number | string,
   locale: string = 'en-US',
   includeSeconds: boolean = false
 ): string {
@@ -94,18 +100,19 @@ export function formatTime(
  * - A: AM/PM
  * - a: am/pm
  * 
- * @param timestamp - Unix timestamp in seconds
+ * @param timestamp - Unix timestamp in seconds (number) or ISO 8601 date string (e.g., "2026-01-04T13:35:44.911638Z")
  * @param format - Format string (e.g., "YYYY-MM-DD", "MM/DD/YYYY HH:mm A")
  * @param locale - Locale string (default: 'en-US')
  * @returns Formatted date string according to the format pattern
  * 
  * @example
  * formatDateCustom(1766754882, "YYYY-MM-DD") // "2024-01-15"
+ * formatDateCustom("2026-01-04T13:35:44.911638Z", "YYYY-MM-DD") // "2026-01-04"
  * formatDateCustom(1766754882, "MM/DD/YYYY HH:mm A") // "01/15/2024 10:30 AM"
  * formatDateCustom(1766754882, "MMMM DD, YYYY") // "January 15, 2024"
  */
 export function formatDateCustom(
-  timestamp: number,
+  timestamp: number | string,
   format: string,
   locale: string = 'en-US'
 ): string {
@@ -155,11 +162,11 @@ export function formatDateCustom(
 
 /**
  * Gets a relative time string (e.g., "2 hours ago", "3 days ago", "just now")
- * @param timestamp - Unix timestamp in seconds
+ * @param timestamp - Unix timestamp in seconds (number) or ISO 8601 date string (e.g., "2026-01-04T13:35:44.911638Z")
  * @param locale - Locale string (default: 'en-US')
  * @returns Relative time string
  */
-export function formatRelativeTime(timestamp: number, locale: string = 'en-US'): string {
+export function formatRelativeTime(timestamp: number | string, locale: string = 'en-US'): string {
   const date = timestampToDate(timestamp);
   const now = new Date();
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
@@ -194,10 +201,10 @@ export function formatRelativeTime(timestamp: number, locale: string = 'en-US'):
 
 /**
  * Checks if a timestamp is today
- * @param timestamp - Unix timestamp in seconds
+ * @param timestamp - Unix timestamp in seconds (number) or ISO 8601 date string (e.g., "2026-01-04T13:35:44.911638Z")
  * @returns True if the timestamp is today
  */
-export function isToday(timestamp: number): boolean {
+export function isToday(timestamp: number | string): boolean {
   const date = timestampToDate(timestamp);
   const today = new Date();
   return (
@@ -209,10 +216,10 @@ export function isToday(timestamp: number): boolean {
 
 /**
  * Checks if a timestamp is yesterday
- * @param timestamp - Unix timestamp in seconds
+ * @param timestamp - Unix timestamp in seconds (number) or ISO 8601 date string (e.g., "2026-01-04T13:35:44.911638Z")
  * @returns True if the timestamp is yesterday
  */
-export function isYesterday(timestamp: number): boolean {
+export function isYesterday(timestamp: number | string): boolean {
   const date = timestampToDate(timestamp);
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
@@ -229,11 +236,11 @@ export function isYesterday(timestamp: number): boolean {
  * - "Yesterday" if the date is yesterday
  * - Relative time if within a week
  * - Full date otherwise
- * @param timestamp - Unix timestamp in seconds
+ * @param timestamp - Unix timestamp in seconds (number) or ISO 8601 date string (e.g., "2026-01-04T13:35:44.911638Z")
  * @param locale - Locale string (default: 'en-US')
  * @returns Human-readable date string
  */
-export function formatSmartDate(timestamp: number, locale: string = 'en-US'): string {
+export function formatSmartDate(timestamp: number | string, locale: string = 'en-US'): string {
   if (isToday(timestamp)) {
     return 'Today';
   }
