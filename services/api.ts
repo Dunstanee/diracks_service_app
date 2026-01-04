@@ -8,7 +8,11 @@ import { router } from "expo-router";
 
 // Get API domain from environment variables
 // Expo requires EXPO_PUBLIC_ prefix for client-side env vars
-const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN || process.env.API_DOMAIN || "";
+import Constants from 'expo-constants';
+
+const API_DOMAIN = Constants.expoConfig?.extra?.apiDomain as string | undefined || "";
+
+
 
 if (!API_DOMAIN) {
   console.warn("API_DOMAIN is not set in environment variables");

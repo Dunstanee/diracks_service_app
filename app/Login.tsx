@@ -16,8 +16,7 @@ export default function Login() {
   
   const { login, isAuthenticated, token } = useAuthStore();
 
-
-
+  
   // Validate single field on change
   const handleFieldChange = (field: "username" | "password", value: string) => {
     if (field === "username") {

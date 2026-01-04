@@ -1,19 +1,19 @@
 import { colors } from '@/constants/colors';
 import { fonts } from '@/constants/fonts';
 import { Ionicons } from '@expo/vector-icons';
+import Constants from 'expo-constants';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
   Dimensions,
   Modal,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 
 export interface LocationData {
@@ -85,12 +85,12 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
       const accuracy = location.coords.accuracy || 0;
 
       // Use Google Maps Reverse Geocoding API to get location details
-      const GOOGLE_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_KEY || process.env.GOOGLE_KEY;
+      const GOOGLE_API_KEY = Constants.expoConfig?.extra?.googleKey as string | undefined || "";
       
       if (!GOOGLE_API_KEY) {
         Alert.alert(
           'Configuration Error',
-          'Google Maps API key is not configured. Please add EXPO_PUBLIC_GOOGLE_KEY to your environment variables.'
+          'Google Maps API key is not configured. Please add googleKey to your environment variables.'
         );
         setIsLoadingCurrentLocation(false);
         return;
@@ -156,7 +156,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
 
     setIsSearching(true);
     try {
-      const GOOGLE_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_KEY || process.env.GOOGLE_KEY;
+      const GOOGLE_API_KEY = Constants.expoConfig?.extra?.googleKey as string | undefined || "";
       
       if (!GOOGLE_API_KEY) {
         setSearchResults([]);
