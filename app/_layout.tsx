@@ -1,15 +1,10 @@
 import { colors } from '@/constants/colors';
 import { fonts } from '@/constants/fonts';
 import { Stack } from "expo-router";
-import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-// Set the animation options. This is optional.
-SplashScreen.setOptions({
-  duration: 10000,
-  fade: true,
-});
+
 export default function RootLayout() {
   return (
     <>

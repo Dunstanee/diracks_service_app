@@ -3,7 +3,7 @@ import 'dotenv/config';
 export default ({ config }) => ({
   ...config,
   name: "D-Service",
-  slug: "D-Service",
+  slug: "dirackServiceApp",
   version: "1.0.0",
   orientation: "portrait",
   icon: "./assets/images/1024.png",
