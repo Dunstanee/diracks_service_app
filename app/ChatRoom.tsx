@@ -1,4 +1,5 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
+import Constants from "expo-constants";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -20,6 +21,7 @@ import { fonts } from "../constants/fonts";
 import api from "../services/api";
 import { useAuthStore } from "../store/authStore";
 import { useUserStore } from "../store/userStore";
+import { formatTime } from "../utils/date";
 
 interface BookedService {
   id: string;
@@ -108,7 +110,7 @@ const ChatRoom = () => {
       return;
     }
 
-    const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN || process.env.API_DOMAIN || "";
+    const API_DOMAIN = Constants.expoConfig?.extra?.apiDomain as string | undefined || "";
     if (!API_DOMAIN) {
       console.error("API_DOMAIN is not set");
       return;
@@ -188,7 +190,7 @@ const ChatRoom = () => {
                         ...msg,
                         id: data.id || msg.id,
                         status: "sent" as const,
-                        timestamp: data.timestamp || msg.timestamp,
+                        timestamp: data.timestamp ? formatTime(data.timestamp) : msg.timestamp,
                       }
                       : msg
                   );
@@ -201,7 +203,7 @@ const ChatRoom = () => {
                     id: data.id || Date.now().toString(),
                     content: messageContent,
                     senderId: messageSenderId,
-                    timestamp: data.timestamp || new Date().toLocaleTimeString([], {
+                    timestamp: data.timestamp ? formatTime(data.timestamp) : new Date().toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
                     }),
@@ -505,7 +507,9 @@ const ChatRoom = () => {
                             : styles.otherMessageTime,
                         ]}
                       >
-                        {msg.timestamp}
+                        {typeof msg.timestamp === 'string' && (msg.timestamp.includes('T') || msg.timestamp.includes('Z')) 
+                          ? formatTime(msg.timestamp) 
+                          : msg.timestamp}
                       </Text>
                       {isMyMessage && (
                         <View style={styles.messageStatus}>

@@ -3,6 +3,7 @@ import { fonts } from '@/constants/fonts';
 import { formatFileSize as formatSize, uploadConfig } from '@/constants/upload';
 import { useAuthStore } from '@/store/authStore';
 import { Ionicons } from '@expo/vector-icons';
+import Constants from 'expo-constants';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
 import {
@@ -156,7 +157,7 @@ export default function ImageUpload({
 
       // Get auth token
       const authToken = useAuthStore.getState().token;
-      const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN || process.env.API_DOMAIN || '';
+      const API_DOMAIN = Constants.expoConfig?.extra?.apiDomain as string | undefined || '';
 
       xhr.open('POST', `${API_DOMAIN}/en/upload/file`);
       
@@ -273,13 +274,16 @@ export default function ImageUpload({
     }
 
     try {
-      // Use MediaTypeOptions (still supported, just deprecated)
-      // The new MediaType enum may not be available in all versions
-      const mediaTypes = fileTypes.includes('image') && fileTypes.includes('video')
-        ? ImagePicker.MediaTypeOptions.All
-        : fileTypes.includes('image')
-        ? ImagePicker.MediaTypeOptions.Images
-        : ImagePicker.MediaTypeOptions.Videos;
+      // Use new MediaType API (array of string literals)
+      // Options: 'images', 'videos', 'livePhotos' (iOS only)
+      let mediaTypes: ImagePicker.MediaType[] = [];
+      if (fileTypes.includes('image') && fileTypes.includes('video')) {
+        mediaTypes = ['images', 'videos'];
+      } else if (fileTypes.includes('image')) {
+        mediaTypes = ['images'];
+      } else if (fileTypes.includes('video')) {
+        mediaTypes = ['videos'];
+      }
 
       const options: ImagePicker.ImagePickerOptions = {
         mediaTypes,

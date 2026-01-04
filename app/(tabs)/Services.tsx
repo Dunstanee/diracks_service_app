@@ -4,6 +4,7 @@ import { fonts } from '@/constants/fonts';
 import api from '@/services/api';
 import { useAuthStore } from '@/store/authStore';
 import { Ionicons } from '@expo/vector-icons';
+import Constants from 'expo-constants';
 import { router } from 'expo-router';
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import {
@@ -220,7 +221,7 @@ const Services = () => {
     setLoadingImages((prev) => new Set(prev).add(systemName));
 
     try {
-      const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN || process.env.API_DOMAIN || '';
+      const API_DOMAIN = Constants.expoConfig?.extra?.apiDomain as string | undefined || '';
       const authToken = useAuthStore.getState().token;
 
       const response = await fetch(`${API_DOMAIN}/file/resource/${systemName}`, {

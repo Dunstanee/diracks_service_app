@@ -9,7 +9,9 @@ import { useAuthStore } from '@/store/authStore';
 import { useBranchStore } from '@/store/branchStore';
 import { useCompanyStore } from '@/store/companyStore';
 import { useUserStore } from '@/store/userStore';
+import { formatDate } from '@/utils/date';
 import { Ionicons } from '@expo/vector-icons';
+import Constants from 'expo-constants';
 import { router } from 'expo-router';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
@@ -183,7 +185,7 @@ const Home = () => {
     setLoadingImages((prev) => new Set(prev).add(systemName));
 
     try {
-      const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN || process.env.API_DOMAIN || '';
+      const API_DOMAIN = Constants.expoConfig?.extra?.apiDomain as string | undefined || '';
       const authToken = useAuthStore.getState().token;
 
       const response = await fetch(`${API_DOMAIN}/file/resource/${systemName}`, {
@@ -393,25 +395,19 @@ const Home = () => {
   const formatLicenseDate = (dateString: string | null): string => {
     if (!dateString) return 'Never';
     try {
-      const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      });
+      return formatDate(dateString);
     } catch {
       return 'Invalid Date';
     }
   };
 
-  const formatTimestampDate = (timestamp: number | null): string => {
+  const formatTimestampDate = (timestamp: number | string | null): string => {
     if (!timestamp) return 'Never';
-    const date = new Date(timestamp * 1000);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
+    try {
+      return formatDate(timestamp);
+    } catch {
+      return 'Invalid Date';
+    }
   };
 
   return (

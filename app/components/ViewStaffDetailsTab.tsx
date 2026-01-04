@@ -43,8 +43,7 @@ const ViewStaffDetailsTab: React.FC<ViewStaffDetailsTabProps> = ({ staff }) => {
 
   const formatDate = (dateString: string): string => {
     try {
-      const date = new Date(dateString);
-      return formatDateCustom(date.getTime() / 1000, 'MM/DD/YYYY');
+      return formatDateCustom(dateString, 'MM/DD/YYYY');
     } catch {
       return dateString;
     }

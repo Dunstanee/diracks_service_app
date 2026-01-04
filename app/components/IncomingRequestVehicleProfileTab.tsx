@@ -197,7 +197,7 @@ const IncomingRequestVehicleProfileTab: React.FC<IncomingRequestVehicleProfileTa
                 <View style={styles.infoContent}>
                   <Text style={styles.infoLabel}>Last Service Date</Text>
                   <Text style={styles.infoValue}>
-                    {formatDateTime(new Date(profile.profile.lastServiceDate).getTime() / 1000)}
+                    {formatDateTime(profile.profile.lastServiceDate)}
                   </Text>
                 </View>
               </View>

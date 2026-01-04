@@ -6,20 +6,21 @@ import api from '@/services/api';
 import { useAuthStore } from '@/store/authStore';
 import { formatDate } from '@/utils/date';
 import { Ionicons } from '@expo/vector-icons';
+import Constants from 'expo-constants';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useLocalSearchParams } from 'expo-router';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-    ActivityIndicator,
-    Alert,
-    ImageBackground,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
+  ActivityIndicator,
+  Alert,
+  ImageBackground,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
 
 interface ServiceMode {
@@ -141,7 +142,7 @@ const ServiceDetails = () => {
   const getImageUri = useCallback(async (systemName: string): Promise<void> => {
     setIsLoadingBanner(true);
     try {
-      const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN || process.env.API_DOMAIN || '';
+      const API_DOMAIN = Constants.expoConfig?.extra?.apiDomain as string | undefined || '';
       const authToken = useAuthStore.getState().token;
 
       const response = await fetch(`${API_DOMAIN}/file/resource/${systemName}`, {
@@ -1224,6 +1225,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
+    backgroundColor: colors.background.primary,
   },
   // Header
   header: {

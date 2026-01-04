@@ -5,6 +5,7 @@ import api from '@/services/api';
 import { useAuthStore } from '@/store/authStore';
 import { formatDateTime } from '@/utils/date';
 import { Ionicons } from '@expo/vector-icons';
+import Constants from 'expo-constants';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Image,
@@ -70,7 +71,7 @@ const IncomingRequestSharedFilesTab: React.FC<IncomingRequestSharedFilesTabProps
     setLoadingImages((prev) => new Set(prev).add(fileId));
 
     try {
-      const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN || process.env.API_DOMAIN || '';
+      const API_DOMAIN = Constants.expoConfig?.extra?.apiDomain as string | undefined || '';
       const authToken = useAuthStore.getState().token;
 
       const response = await fetch(`${API_DOMAIN}/file/resource/${systemName}`, {
@@ -149,7 +150,7 @@ const IncomingRequestSharedFilesTab: React.FC<IncomingRequestSharedFilesTabProps
 
   const handleDownload = async (file: SharedFile) => {
     try {
-      const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN || process.env.API_DOMAIN || '';
+      const API_DOMAIN = Constants.expoConfig?.extra?.apiDomain as string | undefined || '';
       const authToken = useAuthStore.getState().token;
 
       const fileUrl = `${API_DOMAIN}/file/resource/${file.file.systemName}`;

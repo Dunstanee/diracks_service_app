@@ -179,7 +179,7 @@ const InvoicePreviewModal: React.FC<InvoicePreviewModalProps> = ({ visible, invo
                 <Text style={previewStyles.invoiceTitle}>INVOICE</Text>
                 <Text style={previewStyles.invoiceNumberText}>#{invoice.invoiceNumber}</Text>
                 <Text style={previewStyles.invoiceDateText}>
-                  Date: {formatDateTime(new Date(invoice.invoiceDate).getTime() / 1000)}
+                  Date: {formatDateTime(invoice.invoiceDate)}
                 </Text>
               </View>
             </View>
@@ -685,7 +685,7 @@ const IncomingRequestInvoicesTab: React.FC<IncomingRequestInvoicesTabProps> = ({
                         )}
                       </View>
                         <Text style={styles.invoiceDate}>
-                          {formatDateTime(new Date(invoice.invoiceDate).getTime() / 1000)}
+                          {formatDateTime(invoice.invoiceDate)}
                         </Text>
                         
                       </View>

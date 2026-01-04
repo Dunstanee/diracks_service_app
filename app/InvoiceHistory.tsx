@@ -4,21 +4,22 @@ import api from '@/services/api';
 import { useAuthStore } from '@/store/authStore';
 import { formatDateTime } from '@/utils/date';
 import { Ionicons } from '@expo/vector-icons';
+import Constants from 'expo-constants';
 import { router } from 'expo-router';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-    ActivityIndicator,
-    Dimensions,
-    FlatList,
-    Image,
-    ImageBackground,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
+  ActivityIndicator,
+  Dimensions,
+  FlatList,
+  Image,
+  ImageBackground,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
 
 interface InvoiceItem {
@@ -169,7 +170,7 @@ const InvoiceHistory = () => {
     setLoadingImages((prev) => new Set(prev).add(systemName));
 
     try {
-      const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN || process.env.API_DOMAIN || '';
+      const API_DOMAIN = Constants.expoConfig?.extra?.apiDomain as string | undefined || '';
       const authToken = useAuthStore.getState().token;
 
       const response = await fetch(`${API_DOMAIN}/file/resource/${systemName}`, {
@@ -426,7 +427,7 @@ const InvoiceHistory = () => {
             <View style={styles.dateRow}>
               <Ionicons name="calendar-outline" size={14} color={colors.text.secondary} />
               <Text style={styles.dateText}>
-                {formatDateTime(new Date(item.invoiceDate).getTime() / 1000)}
+                {formatDateTime(item.invoiceDate)}
               </Text>
             </View>
             {item.discount > 0 && (
@@ -564,7 +565,7 @@ const InvoiceHistory = () => {
                     <Text style={previewStyles.invoiceTitle}>INVOICE</Text>
                     <Text style={previewStyles.invoiceNumberText}>#{selectedInvoice.invoiceNumber}</Text>
                     <Text style={previewStyles.invoiceDateText}>
-                      Date: {formatDateTime(new Date(selectedInvoice.invoiceDate).getTime() / 1000)}
+                      Date: {formatDateTime(selectedInvoice.invoiceDate)}
                     </Text>
                   </View>
                 </View>

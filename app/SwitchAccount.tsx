@@ -126,6 +126,15 @@ const SwitchAccount = () => {
     }
   };
 
+  // Helper function to normalize timestamp (handles both number and string)
+  const normalizeTimestamp = (timestamp: number | string | undefined | null): string | undefined => {
+    if (!timestamp) return undefined;
+    if (typeof timestamp === 'string') return timestamp;
+    // If it's a number, convert to ISO string
+    const milliseconds = timestamp < 1e12 ? timestamp * 1000 : timestamp;
+    return new Date(milliseconds).toISOString();
+  };
+
   const handleSelectBranch = async (branch: Branch) => {
     if (!selectedAccount || !selectedOrganization) {
       return;
@@ -168,8 +177,8 @@ const SwitchAccount = () => {
         gender: updatedUser.gender,
         country: updatedUser.country,
         birthDate: updatedUser.birthDate,
-        createdAt: new Date(updatedUser.createdAt * 1000).toISOString(),
-        updatedAt: new Date(updatedUser.updatedAt * 1000).toISOString(),
+        createdAt: normalizeTimestamp(updatedUser.createdAt),
+        updatedAt: normalizeTimestamp(updatedUser.updatedAt),
       });
 
       // Store company/organization
@@ -178,8 +187,8 @@ const SwitchAccount = () => {
           id: account.organization.id,
           name: account.organization.name,
           description: account.organization.description || '',
-          createdAt: new Date(account.organization.createdAt * 1000).toISOString(),
-          updatedAt: new Date(account.organization.updatedAt * 1000).toISOString(),
+          createdAt: normalizeTimestamp(account.organization.createdAt),
+          updatedAt: normalizeTimestamp(account.organization.updatedAt),
         });
       }
 
@@ -260,29 +269,17 @@ const SwitchAccount = () => {
           <View style={styles.accountsContainer}>
             {[1, 2, 3].map((index) => (
               <View key={index} style={styles.accountCardSkeleton}>
-                <LinearGradient
-                  colors={[colors.neutral.gray.lighter, colors.neutral.gray.lightest]}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={styles.cardGradientSkeleton}
-                >
-                  <View style={styles.branchPatternOverlay}>
-                    <View style={styles.branchCircle1} />
-                    <View style={styles.branchCircle2} />
-                    <View style={styles.branchCircle3} />
+                <View style={styles.cardContentSkeleton}>
+                  <View style={styles.topSection}>
+                    <Skeleton width="40%" height={14} borderRadius={6} style={{ marginBottom: 6 }} />
+                    <Skeleton width="70%" height={20} borderRadius={8} />
                   </View>
-                  <View style={styles.cardContent}>
-                    <View style={styles.topSection}>
-                      <Skeleton width="40%" height={14} borderRadius={6} style={{ marginBottom: 6 }} />
-                      <Skeleton width="70%" height={20} borderRadius={8} />
-                    </View>
-                    <View style={styles.bottomSection}>
-                      <View style={styles.bottomLeft}>
-                        <Skeleton width="60%" height={13} borderRadius={6} />
-                      </View>
+                  <View style={styles.bottomSection}>
+                    <View style={styles.bottomLeft}>
+                      <Skeleton width="60%" height={13} borderRadius={6} />
                     </View>
                   </View>
-                </LinearGradient>
+                </View>
               </View>
             ))}
           </View>
@@ -1009,12 +1006,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: 'hidden',
   },
-  cardGradientSkeleton: {
+  cardContentSkeleton: {
     borderRadius: 20,
     padding: 20,
     minHeight: 150,
-    position: 'relative',
-    overflow: 'hidden',
+    backgroundColor: 'transparent',
   },
   branchCardSkeleton: {
     marginBottom: 16,
