@@ -1,3 +1,4 @@
+import Button from '@/components/Button';
 import Skeleton from '@/components/Skeleton';
 import Toast, { ToastType } from '@/components/Toast';
 import { colors } from '@/constants/colors';
@@ -604,27 +605,7 @@ const ServiceDetails = () => {
         visible={toast.visible}
         onHide={hideToast}
       />
-      {/* Header */}
-      <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.backButtonHeader}
-            onPress={() => router.back()}
-            activeOpacity={0.7}
-          >
-            <Ionicons name="arrow-back" size={24} color={colors.text.inverse} />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Service Details</Text>
-          <View style={styles.headerActions}>
-            <TouchableOpacity
-              style={styles.headerButton}
-              onPress={handleEdit}
-              activeOpacity={0.7}
-            >
-              <Ionicons name="create-outline" size={24} color={colors.text.inverse} />
-            </TouchableOpacity>
-
-          </View>
-        </View>
+     
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -878,16 +859,18 @@ const ServiceDetails = () => {
               </Text>
             </View>
           </View>
-          {/* Delete Button */}
-          {/* <TouchableOpacity
-            style={styles.deleteButton}
-            onPress={handleDelete}
-            activeOpacity={0.7}
-            disabled={true}
-          >
-            <Ionicons name="trash-outline" size={24} color={colors.text.inverse} />
-            <Text style={styles.deleteButtonText}>Delete Service</Text>
-          </TouchableOpacity> */}
+          <View >
+           
+              <Button
+                
+                title="Update Service"
+                variant="primary"
+                onPress={handleEdit}
+                style={{flexDirection: 'row', justifyContent: 'center', marginTop: 24}}
+                textStyle={{fontSize: 16, fontFamily: fonts.weights.bold, color: colors.text.inverse}}
+                leftIcon={<Ionicons name="pencil-outline" size={24} color={colors.text.inverse} />}
+              />
+          </View>
         </View>
       </ScrollView>
 
@@ -1219,64 +1202,9 @@ const ServiceDetails = () => {
 export default ServiceDetails;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background.secondary,
-  },
   scrollContent: {
     flexGrow: 1,
     backgroundColor: colors.background.primary,
-  },
-  // Header
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    backgroundColor: colors.primary.green,
-    position: 'sticky',
-    top: 0,
-    zIndex: 1000,
-    fontFamily: fonts.weights.regular,
-  },
-  backButtonHeader: {
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontFamily: fonts.weights.bold,
-    color: colors.text.inverse,
-    flex: 1,
-    textAlign: 'center',
-  },
-  headerActions: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  headerButton: {
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  deleteButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    marginTop: 24,
-    backgroundColor: colors.semantic.error,
-    padding: 12,
-    borderRadius: 12,
-  },
-  deleteButtonText: {
-    fontSize: 14,
-    fontFamily: fonts.weights.regular,
-    color: colors.text.inverse,
   },
   // Banner
   bannerContainer: {
@@ -1597,14 +1525,6 @@ const styles = StyleSheet.create({
     color: colors.neutral.gray.medium,
   },
   // Loading States
-  headerSkeleton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    backgroundColor: colors.primary.green,
-  },
   bannerSkeleton: {
     marginBottom: 0,
   },

@@ -6,13 +6,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router, useLocalSearchParams } from 'expo-router';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-    ActivityIndicator,
-    ImageBackground,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import ViewStaffAccountTab from './components/ViewStaffAccountTab';
 import ViewStaffBranchesTab from './components/ViewStaffBranchesTab';
@@ -148,14 +148,6 @@ const ViewStaff = () => {
           style={styles.bannerOverlay}
         >
           <View style={styles.bannerContent}>
-            {/* Back Button */}
-            <TouchableOpacity
-              style={styles.backButtonBanner}
-              onPress={() => router.back()}
-              activeOpacity={0.7}
-            >
-              <Ionicons name="arrow-back" size={24} color={colors.text.inverse} />
-            </TouchableOpacity>
 
             {/* Staff Info on Banner */}
             <View style={styles.bannerInfo}>
@@ -355,18 +347,6 @@ const styles = StyleSheet.create({
   bannerContent: {
     padding: 20,
     paddingBottom: 24,
-  },
-  backButtonBanner: {
-    position: 'absolute',
-    top: 20,
-    left: 20,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 10,
   },
   bannerInfo: {
     flexDirection: 'row',

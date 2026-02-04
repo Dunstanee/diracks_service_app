@@ -279,33 +279,7 @@ const Staffs = () => {
   return (
     <>
       <View style={styles.container}>
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => router.back()}
-            activeOpacity={0.7}
-          >
-            <Ionicons name="arrow-back" size={24} color={colors.text.primary} />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Staffs</Text>
-          <View style={styles.headerRight}>
-            {/* <TouchableOpacity
-              style={styles.iconButton}
-              onPress={fetchStaffs}
-              activeOpacity={0.7}
-            >
-              <Ionicons name="refresh" size={24} color={colors.primary.green} />
-            </TouchableOpacity> */}
-            <TouchableOpacity
-              style={styles.addButton}
-              onPress={handleOpenAddModal}
-              activeOpacity={0.7}
-            >
-              <Ionicons name="add" size={24} color={colors.text.inverse} />
-            </TouchableOpacity>
-          </View>
-        </View>
+       
 
         {/* Search Field */}
         <View style={styles.searchContainer}>
@@ -334,6 +308,13 @@ const Staffs = () => {
               </TouchableOpacity>
             )}
           </View>
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={handleOpenAddModal}
+            activeOpacity={0.7}
+          >
+            <Ionicons name="add" size={24} color={colors.text.inverse} />
+          </TouchableOpacity>
         </View>
 
         {/* Loading State */}
@@ -612,57 +593,35 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background.primary,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 16,
-    backgroundColor: colors.background.primary,
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontFamily: fonts.weights.bold,
-    color: colors.text.primary,
-  },
-  headerRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  iconButton: {
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   addButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     backgroundColor: colors.primary.green,
     justifyContent: 'center',
     alignItems: 'center',
   },
   searchContainer: {
-    paddingHorizontal: 20,
-    paddingBottom: 16,
-  },
-  searchInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    paddingBottom: 16,
+    backgroundColor: colors.background.primary,
+  },
+  searchInputContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    minWidth: 0,
+    maxWidth: '80%',
     backgroundColor: colors.background.secondary,
     borderRadius: 12,
     paddingHorizontal: 12,
     borderWidth: 1,
     borderColor: colors.neutral.gray.lighter,
+    height: 44,
   },
   searchIcon: {
     marginRight: 8,
@@ -670,7 +629,8 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     height: 44,
-    fontSize: 16,
+    paddingVertical: 0,
+    fontSize: 15,
     fontFamily: fonts.weights.regular,
     color: colors.text.primary,
   },

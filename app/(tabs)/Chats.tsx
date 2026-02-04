@@ -16,9 +16,9 @@ import { fonts } from "../../constants/fonts";
 import api from "../../services/api";
 
 // Format date for chat list display
-const formatChatDate = (timestamp: number): string => {
+const formatChatDate = (timestamp: string): string => {
   const now = new Date();
-  const messageDate = new Date(timestamp * 1000);
+  const messageDate = new Date(timestamp);
   const diffInSeconds = Math.floor((now.getTime() - messageDate.getTime()) / 1000);
   const diffInMinutes = Math.floor(diffInSeconds / 60);
   const diffInHours = Math.floor(diffInMinutes / 60);
@@ -70,7 +70,7 @@ interface BookedService {
   id: string;
   bookCode: string;
   description: string;
-  bookedDate: number;
+  bookedDate: string;
   customer: {
     id: string;
     firstName: string;
@@ -151,9 +151,7 @@ const Chats = () => {
       >
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity style={styles.headerButton}>
-            <Ionicons name="expand" size={24} color={colors.text.primary} />
-          </TouchableOpacity>
+       
 
           <Text style={styles.headerTitle}>Chat</Text>
 
@@ -198,7 +196,7 @@ const Chats = () => {
             filteredServices.map((service) => {
               const customerName = getCustomerName(service.customer);
               const profileImage = getProfileImage(service.customer.gender);
-              const formattedDate = formatChatDate(service.bookedDate);
+              const formattedDate = formatChatDate(service.bookedDate.toString());
               const hasNewMessage = false; // TODO: Implement new message detection
 
               return (
@@ -274,12 +272,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 20,
     paddingVertical: 16,
-  },
-  headerButton: {
-    width: 40,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
   },
   headerTitle: {
     fontSize: 20,
@@ -358,14 +350,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: fonts.weights.bold,
     color: colors.text.primary,
-  },
-  verifiedIcon: {
-    marginLeft: 2,
-  },
-  chatLastMessage: {
-    fontSize: 14,
-    fontFamily: fonts.weights.regular,
-    color: colors.text.secondary,
   },
   chatItemRight: {
     alignItems: "flex-end",

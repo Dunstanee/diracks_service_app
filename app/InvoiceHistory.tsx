@@ -5,7 +5,6 @@ import { useAuthStore } from '@/store/authStore';
 import { formatDateTime } from '@/utils/date';
 import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
-import { router } from 'expo-router';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -446,17 +445,7 @@ const InvoiceHistory = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => router.back()}
-          activeOpacity={0.7}
-        >
-          <Ionicons name="arrow-back" size={24} color={colors.text.primary} />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Invoice History</Text>
-        <View style={styles.placeholder} />
-      </View>
+      
 
       {/* Search Field */}
       <View style={styles.searchContainer}>

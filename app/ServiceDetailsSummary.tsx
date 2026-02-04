@@ -270,15 +270,7 @@ const ServiceDetailsSummary = () => {
               style={styles.bannerGradient}
             />
             <View style={styles.bannerContent}>
-              <View style={styles.bannerHeader}>
-                <TouchableOpacity
-                  style={styles.backButtonHeader}
-                  onPress={() => router.back()}
-                  activeOpacity={0.7}
-                >
-                  <Ionicons name="arrow-back" size={24} color={colors.text.inverse} />
-                </TouchableOpacity>
-              </View>
+              
               <View style={styles.bannerInfo}>
                 <Text style={styles.serviceName}>{service.name}</Text>
                 <Text style={styles.serviceDescriptionBanner} numberOfLines={3}>

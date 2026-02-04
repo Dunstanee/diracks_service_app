@@ -16,14 +16,13 @@ import { router } from 'expo-router';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
-  Alert,
   Image,
   ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 
 interface ServiceMode {
@@ -99,14 +98,7 @@ const actionCards = [
     icon: 'document-text-outline',
     color: colors.semantic.error,
     route: '/InvoiceHistory',
-  },
-  {
-    id: 'plans',
-    title: 'Plans',
-    icon: 'card-outline',
-    color: colors.primary.greenDark,
-    route: '/SubscriptionPlans',
-  },
+  }
 ];
 
 const Home = () => {
@@ -371,26 +363,7 @@ const Home = () => {
     });
   };
 
-  const handleLogout = () => {
-    Alert.alert(
-      'Logout',
-      'Are you sure you want to logout?',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Logout',
-          style: 'destructive',
-          onPress: () => {
-            logout();
-            router.replace('/Login');
-          },
-        },
-      ]
-    );
-  };
+
 
   const formatLicenseDate = (dateString: string | null): string => {
     if (!dateString) return 'Never';
@@ -428,9 +401,7 @@ const Home = () => {
             </View>
           </View>
           <View style={styles.headerActions}>
-          <TouchableOpacity style={styles.notificationButton} activeOpacity={0.7} onPress={handleLogout}>
-            <Ionicons name="log-out-outline" size={24} color={colors.text.primary} />
-          </TouchableOpacity>
+          
           <TouchableOpacity style={styles.notificationButton} activeOpacity={0.7} onPress={() => router.push('/Notification')}>
             <Ionicons name="notifications-outline" size={24} color={colors.text.primary} />
             <View style={styles.notificationBadge}>
@@ -553,25 +524,6 @@ const Home = () => {
           </View>
         )}
 
-        {/* Subscription Plans Button */}
-        <TouchableOpacity
-          style={styles.subscriptionPlanButton}
-          onPress={() => router.push('/SubscriptionPlans')}
-          activeOpacity={0.7}
-        >
-          <View style={styles.subscriptionPlanContent}>
-            <View style={styles.subscriptionPlanLeft}>
-              <View style={styles.subscriptionPlanIconContainer}>
-                <Ionicons name="card" size={24} color={colors.primary.green} />
-              </View>
-              <View style={styles.subscriptionPlanTextContainer}>
-                <Text style={styles.subscriptionPlanTitle}>Subscription Plans</Text>
-                <Text style={styles.subscriptionPlanSubtitle}>View and manage your plans</Text>
-              </View>
-            </View>
-            <Ionicons name="chevron-forward" size={20} color={colors.primary.white} />
-          </View>
-        </TouchableOpacity>
         {/* more action Section */}
         <View style={styles.actionsSection}>
           <Text style={styles.sectionTitle}>Quick Actions</Text>
@@ -736,14 +688,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
   },
   notificationBadge: {
     position: 'absolute',
@@ -1031,7 +975,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   actionIconContainer: {
-    width: 40 ,
+    width: 40,
     height: 40,
     borderRadius: 20,
     justifyContent: 'center',
@@ -1044,47 +988,5 @@ const styles = StyleSheet.create({
     color: colors.text.primary,
     marginBottom: 4,
     textAlign: 'center',
-  },
-  subscriptionPlanButton: {
-    backgroundColor: colors.background.darkAccent,
-    borderRadius: 16,
-    marginBottom: 24,
-    borderWidth: 1,
-    borderColor: colors.neutral.gray.lighter,
-   
-  },
-  subscriptionPlanContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 16,
-  },
-  subscriptionPlanLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-    gap: 12,
-  },
-  subscriptionPlanIconContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: colors.primary.greenLight + '20',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  subscriptionPlanTextContainer: {
-    flex: 1,
-  },
-  subscriptionPlanTitle: {
-    fontSize: 16,
-    fontFamily: fonts.weights.bold,
-    color: colors.text.inverse,
-    marginBottom: 4,
-  },
-  subscriptionPlanSubtitle: {
-    fontSize: 13,
-    fontFamily: fonts.weights.regular,
-    color: colors.text.inverse,
   },
 });

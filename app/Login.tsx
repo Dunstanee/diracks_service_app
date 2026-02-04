@@ -1,11 +1,15 @@
 import Button from "@/components/Button";
 import Input from "@/components/Input";
+import Toast from "@/components/Toast";
 import { colors } from "@/constants/colors";
 import { fonts } from "@/constants/fonts";
 import api from "@/services/api";
 import { useAuthStore } from "@/store/authStore";
 import { loginSchema, validateField, validateForm } from "@/validators";
+import { Ionicons } from "@expo/vector-icons";
+import * as LocalAuthentication from "expo-local-authentication";
 import { router } from "expo-router";
+import * as SecureStore from "expo-secure-store";
 import { useState } from "react";
 import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 export default function Login() {
@@ -13,6 +17,11 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [toast, setToast] = useState<{ visible: boolean; message: string; type: 'success' | 'error' | 'info' | 'warning' }>({
+    visible: false,
+    message: '',
+    type: 'error',
+  });
   
   const { login, isAuthenticated, token } = useAuthStore();
 
@@ -81,6 +90,12 @@ export default function Login() {
         // Store authentication data
         // Using accessToken as both token and refreshToken since API only provides accessToken
         login(accessToken, accessToken, user);
+        // If fingerprint login is enabled, save credentials for next biometric sign-in
+        const biometricEnabled = await SecureStore.getItemAsync("biometric_enabled");
+        if (biometricEnabled === "true") {
+          await SecureStore.setItemAsync("auth_email", username);
+          await SecureStore.setItemAsync("auth_password", password);
+        }
         // Permissions will be fetched after account switch
         router.push("/SwitchAccount");
       } else {
@@ -108,11 +123,107 @@ export default function Login() {
       setIsLoading(false);
     }
   };
+
+  const handleBiometricLogin = async () => {
+    try {
+      const biometricEnabled = await SecureStore.getItemAsync("biometric_enabled");
+      if (biometricEnabled !== "true") {
+        setToast({
+          visible: true,
+          message: "Biometric login is not enabled. Please login with password and enable it in Profile.",
+          type: "info",
+        });
+        return;
+      }
+
+      const hasHardware = await LocalAuthentication.hasHardwareAsync();
+      const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+
+      if (!hasHardware || !isEnrolled) {
+        setToast({
+          visible: true,
+          message: "Biometrics not available on this device.",
+          type: "error",
+        });
+        return;
+      }
+
+      const result = await LocalAuthentication.authenticateAsync({
+        promptMessage: "Login with Biometrics",
+      });
+
+      if (result.success) {
+        const email = await SecureStore.getItemAsync("auth_email");
+        const password = await SecureStore.getItemAsync("auth_password");
+
+        if (email && password) {
+          setIsLoading(true);
+          try {
+            // Call login API with stored credentials
+            const response = await api.post(
+              "/login",
+              {
+                emailOrUserNumber: email,
+                password: password,
+              },
+              {
+                requiresAuth: false,
+              }
+            );
+
+            const { accessToken, user } = response.data;
+
+            if (accessToken && user) {
+              // Store authentication data
+              // Using accessToken as both token and refreshToken since API only provides accessToken
+              login(accessToken, accessToken, user);
+              // Permissions will be fetched after account switch
+              router.push("/SwitchAccount");
+            } else {
+              // Handle unexpected response format
+              setErrors({ 
+                general: "Invalid response from server. Please try again." 
+              });
+            }
+          } catch (error: any) {
+            console.error("Biometric auto-login error:", error);
+            setToast({
+              visible: true,
+              message: "Biometric login failed. Your password may have changed.",
+              type: "error",
+            });
+          } finally {
+            setIsLoading(false);
+          }
+        } else {
+          setToast({
+            visible: true,
+            message: "Stored credentials not found. Please login with password.",
+            type: "error",
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Biometric login error:", error);
+      setToast({
+        visible: true,
+        message: "Biometric login failed.",
+        type: "error",
+      });
+    }
+  };
+
     return (
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
+        <Toast
+        visible={toast.visible}
+        message={toast.message}
+        type={toast.type}
+        onHide={() => setToast({ ...toast, visible: false })}
+      />
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
@@ -162,14 +273,19 @@ export default function Login() {
               </View>
             )}
 
+            <View style={styles.loginButtonsContainer}>
             <Button
               title="SIGN IN"
               variant="primary"
               onPress={handleLogin}
               loading={isLoading}
               disabled={isLoading}
-              style={styles.signInButton}
+              style={styles.signInButtonFlexible}
             />
+            <TouchableOpacity onPress={handleBiometricLogin} style={styles.biometricButton}>
+              <Ionicons name="finger-print" size={32} color={colors.primary.green} />
+            </TouchableOpacity>
+          </View>
           </View>
   
           
@@ -184,6 +300,25 @@ const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent: "flex-start",
       marginBottom: 20,
+  },
+  loginButtonsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+    gap: 16,
+  },
+  signInButtonFlexible: {
+    flex: 1,
+    marginBottom: 0,
+  },
+  biometricButton: {
+    padding: 10,
+    backgroundColor: colors.primary.green + '15', // Light green background
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 56, // Match standard button height if possible, or close to it
+    width: 56,
   },
   headerIcon: {
       width: 32,

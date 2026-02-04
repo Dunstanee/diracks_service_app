@@ -583,11 +583,6 @@ const styles = StyleSheet.create({
   userGreeting: {
     marginBottom: 12,
   },
-  greetingText: {
-    fontSize: 16,
-    fontFamily: fonts.weights.semiBold,
-    color: colors.primary.green,
-  },
   title: {
     fontSize: 32,
     fontFamily: fonts.weights.bold,
@@ -604,12 +599,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 60,
-  },
-  loadingText: {
-    marginTop: 16,
-    fontSize: 16,
-    fontFamily: fonts.weights.medium,
-    color: colors.neutral.gray.medium,
   },
   errorContainer: {
     padding: 20,
@@ -718,41 +707,10 @@ const styles = StyleSheet.create({
   bottomLeft: {
     flex: 1,
   },
-  accountLabel: {
-    fontSize: 16,
-    fontFamily: fonts.weights.semiBold,
-    color: colors.text.inverse,
-    marginBottom: 4,
-    letterSpacing: 0.3,
-  },
   accountStatus: {
     fontSize: 13,
     fontFamily: fonts.weights.regular,
     color: 'rgba(255, 255, 255, 0.75)',
-  },
-  toggleContainer: {
-    marginLeft: 16,
-  },
-  toggleTrack: {
-    width: 50,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    justifyContent: 'center',
-    paddingHorizontal: 2,
-  },
-  toggleTrackActive: {
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-  },
-  toggleThumb: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: colors.text.inverse,
-    alignSelf: 'flex-start',
-  },
-  toggleThumbActive: {
-    alignSelf: 'flex-end',
   },
   emptyText: {
     fontSize: 18,
@@ -781,10 +739,8 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: colors.background.primary,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    maxHeight: '80%',
-    minHeight: '80%',
+    maxHeight: '100%',
+    minHeight: '100%',
     paddingTop: 20,
     paddingBottom: 40,
   },

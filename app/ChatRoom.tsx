@@ -95,7 +95,6 @@ const ChatRoom = () => {
         );
         setBookedService(response.data);
       } catch (err: any) {
-        console.error("Failed to fetch booked service:", err);
       } finally {
         setIsLoading(false);
       }
@@ -429,12 +428,7 @@ const ChatRoom = () => {
     >
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.headerButton}
-          onPress={() => router.back()}
-        >
-          <Ionicons name="arrow-back" size={24} color={colors.text.primary} />
-        </TouchableOpacity>
+        
 
         <View style={styles.headerCenter}>
           {isLoading ? (
@@ -657,24 +651,14 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
     paddingHorizontal: 16,
     paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.neutral.gray.lighter,
     backgroundColor: colors.background.primary,
-  },
-  headerButton: {
-    width: 40,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 20,
-    backgroundColor: colors.neutral.gray.lightest,
   },
   headerCenter: {
     flex: 1,
-    alignItems: "center",
+    alignItems: "flex-start",
     marginHorizontal: 16,
   },
   headerName: {

@@ -8,11 +8,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function RootLayout() {
   return (
     <>
-      <SafeAreaView style={{ flex: 1, backgroundColor: colors.background.darkAccent }}>
+      <SafeAreaView style={{ flex: 1 }} edges={[ 'bottom','left','right']} >
         <Stack
           screenOptions={{
             headerStyle: {
-              backgroundColor: colors.background.accent,
+              backgroundColor: colors.background.darkAccent,
             },
             headerTintColor: colors.text.inverse,
             headerTitleStyle: {
@@ -23,36 +23,36 @@ export default function RootLayout() {
           <Stack.Screen name="index"   options={{  headerShown: false }} />
           <Stack.Screen name="Login" options={{ headerShown: false }} />
           <Stack.Screen name="SwitchAccount" options={{ headerShown: false }} />
-          <Stack.Screen name="ChangePassword" options={{ headerShown: false }} />
-          <Stack.Screen name="UpdateProfile" options={{ headerShown: false }} />
+          <Stack.Screen name="ChangePassword" options={{ title: 'Change Password' }} />
+          <Stack.Screen name="UpdateProfile" options={{ title: 'Update Profile' }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="NewService" options={{ headerShown: false }} />
-          <Stack.Screen name="ServiceDetails" options={{ headerShown: false }} />
+          <Stack.Screen name="NewService" options={{ title: 'New Service' }} />
+          <Stack.Screen name="ServiceDetails" options={{ title: 'Service Details' }} />
           <Stack.Screen name="EditService" options={{
             headerShown: false,
             title: 'Update Service',
-            headerStyle: { backgroundColor: colors.background.accent },
+            headerStyle: { backgroundColor: colors.background.darkAccent },
             headerTintColor: colors.text.inverse,
             headerTitleStyle: {
               fontFamily: fonts.weights.bold,
               color: colors.text.inverse,
             },
           }} />
-          <Stack.Screen name="BranchDetails" options={{ headerShown: false }} />
-          <Stack.Screen name="ServiceDetailsSummary" options={{ headerShown: false }} />
-          <Stack.Screen name="SubscriptionPlans" options={{ headerShown: false }} />
-          <Stack.Screen name="Staffs" options={{ headerShown: false }} />
-          <Stack.Screen name="ViewStaff" options={{ headerShown: false }} />
-          <Stack.Screen name="IncomingRequestList" options={{ headerShown: false }} />
-          <Stack.Screen name="IncomingRequestDetails" options={{ headerShown: false }} />
-          <Stack.Screen name="ChatRoom" options={{ headerShown: false }} />
-          <Stack.Screen name="FinanceBreakSummary" options={{ title: 'Finance Break Summary', headerShown: false }} />
-          <Stack.Screen name="BookingHistory" options={{ title: 'Booking History', headerShown: false }} />  
-          <Stack.Screen name="InvoiceHistory" options={{ title: 'Invoice History', headerShown: false }} />
-          <Stack.Screen name="Notification" options={{ title: 'Notifications', headerShown: false }} />
+          <Stack.Screen name="BranchDetails" options={{ title: 'Branch Details' }} />
+          <Stack.Screen name="ServiceDetailsSummary" options={{ title: 'Service Details Summary' }} />
+            <Stack.Screen name="Staffs" options={{ title: 'Staffs' }} />
+          <Stack.Screen name="ViewStaff" options={{ title: 'View Staff' }} />
+          <Stack.Screen name="IncomingRequestList" options={{ title: 'Incoming Request List' }} />
+          <Stack.Screen name="IncomingRequestDetails" options={{ title: 'Incoming Request Details' }} />
+          <Stack.Screen name="ChatRoom" options={{ title: 'Chat Room' }} />
+          <Stack.Screen name="FinanceBreakSummary" options={{ title: 'Finance Break Summary' }} />
+          <Stack.Screen name="BookingHistory" options={{ title: 'Booking History' }} />  
+          <Stack.Screen name="InvoiceHistory" options={{ title: 'Invoice History' }} />
+          <Stack.Screen name="Notification" options={{ title: 'Notifications' }} />
+          <Stack.Screen name="PrivacyPolicy" options={{ title: 'Privacy Policy' }} />
         </Stack>
       </SafeAreaView>
-      <StatusBar style="light" />
+      <StatusBar  style="auto" backgroundColor={colors.background.darkAccent}  />
     </>
   );
 }

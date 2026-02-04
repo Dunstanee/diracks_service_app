@@ -1,10 +1,12 @@
 import React from "react";
-import { ActivityIndicator, Text, TextStyle, TouchableOpacity, ViewStyle } from "react-native";
+import { ActivityIndicator, Text, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
 import { colors } from "../constants/colors";
 import { fonts } from "../constants/fonts";
 
 export interface ButtonProps {
   title: string;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
   onPress?: () => void;
   variant?: "primary" | "secondary" | "outline" | "text" | "danger" | "outline-danger";
   disabled?: boolean;
@@ -15,6 +17,8 @@ export interface ButtonProps {
 
 export default function Button({
   title,
+  leftIcon,
+  rightIcon,
   onPress,
   variant = "primary",
   disabled = false,
@@ -36,7 +40,7 @@ export default function Button({
       case "primary":
         return {
           ...baseStyle,
-          backgroundColor: disabled ? colors.neutral.gray.light : colors.primary.green,
+          backgroundColor: disabled ? colors.neutral.gray.light : colors.primary.darkGreen,
         };
       case "secondary":
         return {
@@ -117,7 +121,11 @@ export default function Button({
           size="small"
         />
       ) : (
-        <Text style={[getTextStyle(), textStyle, { color: variant === "outline-danger" ? colors.semantic.error : colors.text.inverse }]}>{title}</Text>
+        <View style={{flexDirection: 'row', alignItems: 'center', gap: 8}}>
+          {leftIcon && leftIcon}
+          <Text style={[getTextStyle(), textStyle, { color: variant === "outline-danger" ? colors.semantic.error : colors.text.inverse }]}>{title}</Text>
+          {rightIcon && rightIcon}
+        </View>
       )}
     </TouchableOpacity>
   );

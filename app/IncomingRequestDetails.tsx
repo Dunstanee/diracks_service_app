@@ -6,7 +6,7 @@ import { useAuthStore } from '@/store/authStore';
 import { formatDateTime } from '@/utils/date';
 import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
-import { router, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
     ActivityIndicator,
@@ -401,18 +401,7 @@ const IncomingRequestDetails = () => {
                     >
                         <View style={styles.stickyBannerOverlay}>
                             {/* Always show back button and service name */}
-                            <View style={styles.stickyHeaderContent}>
-                                <TouchableOpacity
-                                    style={styles.stickyBackButton}
-                                    onPress={() => router.back()}
-                                    activeOpacity={0.7}
-                                >
-                                    <Ionicons name="arrow-back" size={20} color={colors.text.inverse} />
-                                </TouchableOpacity>
-                                <Text style={styles.stickyServiceName} numberOfLines={1}>
-                                    {request.service.name}
-                                </Text>
-                            </View>
+                         
 
                             {/* Show full content when not scrolled */}
                             <Animated.View 

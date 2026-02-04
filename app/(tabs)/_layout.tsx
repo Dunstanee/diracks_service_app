@@ -3,9 +3,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Layout = () => {
   return (
+    <SafeAreaView style={{ flex: 1 }} edges={[ 'top']} >
     <Tabs
       screenOptions={{
         headerShown: false,
@@ -91,9 +93,10 @@ const Layout = () => {
               size={size}
             />
           ),
-        }}
-      />
-    </Tabs>
+          }}
+        />
+      </Tabs>
+    </SafeAreaView>
   );
 };
 

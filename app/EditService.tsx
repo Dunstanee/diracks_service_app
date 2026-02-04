@@ -22,8 +22,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import { z } from 'zod';
 
@@ -330,13 +329,7 @@ const EditService = () => {
       />
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButtonHeader}
-          onPress={() => router.back()}
-          activeOpacity={0.7}
-        >
-          <Ionicons name="arrow-back" size={24} color={colors.text.inverse} />
-        </TouchableOpacity>
+       
         <Text style={styles.headerTitle}>Edit Service</Text>
         <View style={styles.headerSpacer} />
       </View>
@@ -505,12 +498,6 @@ const styles = StyleSheet.create({
     fontFamily: fonts.weights.regular,
     top: 0,
     zIndex: 1000,
-  },
-  backButtonHeader: {
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   headerTitle: {
     fontSize: 20,

@@ -145,17 +145,7 @@ const IncomingRequestList = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => router.back()}
-          activeOpacity={0.7}
-        >
-          <Ionicons name="arrow-back" size={24} color={colors.text.primary} />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Incoming Requests</Text>
-        <View style={styles.placeholder} />
-      </View>
+      
 
       {/* Search Field */}
       <View style={styles.searchContainer}>
